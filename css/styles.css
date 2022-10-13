@@ -12765,3 +12765,9 @@ body {
 .footer {
   padding: 5rem 0;
 }
+
+@media (max-width: 768px) {
+  .carousel-item .shadow {
+    position: unset !important;
+  }
+}
