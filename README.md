@@ -7,6 +7,7 @@ It is a website for booking co-working spaces in various regions and time slots
 ## bootstrap components used
 - Carousel
 - Toast
+- Close Button
 - Form
 - FontAwesome Icons
 - Primary and Secondary Buttons
@@ -14,3 +15,5 @@ It is a website for booking co-working spaces in various regions and time slots
 - Cards
 - Grid System
 - Text Typography
+- Badge
+- Scrollspy
