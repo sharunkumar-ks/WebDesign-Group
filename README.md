@@ -5,15 +5,15 @@
 It is a website for booking co-working spaces in various regions and time slots
 
 ## bootstrap components used
-- Carousel
-- Toast
-- Close Button
-- Form
-- FontAwesome Icons
-- Primary and Secondary Buttons
-- Navbar
-- Cards
-- Grid System
-- Text Typography
-- Badge
-- Scrollspy
+- Carousel - for image gallery (with descriptions)
+- Toast - for showing subscribe notification
+- Close Button - to close the toast message
+- Form - for email subscribe form
+- FontAwesome Icons - for various social media icons
+- Primary and Secondary Buttons - various buttons across the page
+- Navbar - main navigation bar
+- Cards - for contact cards
+- Grid System - for arranging various components in a responsive manner
+- Text Typography - various text styles
+- Badge - "new" badge in one of the gallery descriptions
+- Scrollspy - for highlighting the specific segment of the page that is scrolled to
