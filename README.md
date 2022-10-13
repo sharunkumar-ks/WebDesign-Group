@@ -13,3 +13,4 @@ It is a website for booking co-working spaces in various regions and time slots
 - Navbar
 - Cards
 - Grid System
+- Text Typography
