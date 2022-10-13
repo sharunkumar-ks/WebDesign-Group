@@ -179,7 +179,7 @@
                   aria-label="Enter email address..." data-sb-validations="required,email" />
               </div>
               <div class="col-auto">
-                <button class="btn btn-primary disabled" id="submitButton" type="submit">
+                <button class="btn btn-primary disabled" id="submitButton" type="submit" onclick="showToast()">
                   Notify Me!
                 </button>
               </div>
@@ -194,9 +194,25 @@
             <!---->
             <!-- This is what your users will see when the form-->
             <!-- has successfully submitted-->
+            <!-- <button type="button" class="btn btn-primary" id="liveToastBtn" onclick="showToast()">Show live
+              toast</button> -->
+
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+              <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                  <strong class="me-auto">RoomTree</strong>
+                  <small>Just Now</small>
+                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  Subscription successful!
+                </div>
+              </div>
+            </div>
             <div class="d-none" id="submitSuccessMessage">
               <div class="text-center mb-3 mt-2 text-white">
-                <div class="fw-bolder">Subscription successful!</div>
+                <!-- <div class="fw-bolder">Subscription successful!</div> -->
                 <!-- To activate this form, sign up at
                 <br />
                 <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a> -->
