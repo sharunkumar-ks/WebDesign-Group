@@ -17,3 +17,9 @@ It is a website for booking co-working spaces in various regions and time slots
 - Text Typography - various text styles
 - Badge - "new" badge in one of the gallery descriptions
 - Scrollspy - for highlighting the specific segment of the page that is scrolled to
+
+## Group Members
+Sharun Kumar Kakkad Sasikumar	002774079
+Apoorva Jain	            	002764526
+Rajas Telang	            	002705207
+Mihir Sheth		                002743969
