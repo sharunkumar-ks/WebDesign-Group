@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 
-const Test: NextPage = () => {
+const Login: NextPage = () => {
 
     return <div className="relative flex min-h-screen text-gray-800 antialiased flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
         <div className="relative py-3 sm:w-96 mx-auto text-center">
@@ -23,4 +23,4 @@ const Test: NextPage = () => {
     </div>
 }
 
-export default Test
+export default Login
