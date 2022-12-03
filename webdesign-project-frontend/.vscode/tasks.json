@@ -10,10 +10,17 @@
 		},
 		{
 			"type": "npm",
-			"script": "prisma",
+			"script": "prisma:studio",
 			"problemMatcher": [],
-			"label": "npm: prisma",
+			"label": "npm: prisma:studio",
 			"detail": "prisma studio"
+		},
+		{
+			"type": "npm",
+			"script": "prisma:dbpush",
+			"problemMatcher": [],
+			"label": "npm: prisma:dbpush",
+			"detail": "prisma db push"
 		}
 	]
 }
