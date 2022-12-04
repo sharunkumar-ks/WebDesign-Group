@@ -17,6 +17,55 @@ const Payment: NextPage = () => {
     console.log(id)
 
     return <>
+
+        <div className="container p-0 mx-auto my-5">
+
+
+            <h2 className="h1-responsive font-weight-bold text-center my-4">Booking</h2>
+
+
+            <div className="row">
+
+
+                <div className="col-md-9 mb-md-0 mb-5">
+                    <form id="contact-form" name="contact-form" action="">
+
+                        <div className="row">
+
+                            <div className="col-md-6">
+                                <div className="md-form mb-0">
+                                    <input type="text" id="name" name="name" className="form-control" />
+                                    <p className="text mb-1">Name</p>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="md-form mb-0">
+                                    <input type="text" id="email" name="email" className="form-control" />
+                                    <p className="text mb-1">Email</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="md-form mb-0">
+                                    <input type="number" id="subject" name="subject" className="form-control" />
+                                    <p className="text mb-1">Phone Number</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
         <div className="container p-0 mx-auto my-5">
             <div className="card px-4">
                 <p className="h8 py-3">Payment Details</p>

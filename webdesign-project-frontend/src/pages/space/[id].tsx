@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import Link from "next/link"
 
 const OfficeSpace: NextPage = () => {
 
@@ -10,7 +11,7 @@ const OfficeSpace: NextPage = () => {
 
     return <>
         <h1>Office Space of ID {id}</h1>
-        <button type="button" className="btn btn-primary">Book</button>
+        <button type="button" className="btn btn-primary"><Link href={"/payment {id}"}>Book</Link></button>
     </>
 }
 
