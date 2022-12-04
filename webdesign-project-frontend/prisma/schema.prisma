@@ -48,13 +48,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  BookedTimeSlot BookedTimeSlot[]
 }
 
 model VerificationToken {
@@ -63,4 +64,38 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Location {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  spaces Space[]
+}
+
+model Space {
+  id             String           @id @default(cuid())
+  title          String
+  description    String
+  location       Location         @relation(fields: [locationId], references: [id])
+  locationId     String
+  BookedTimeSlot BookedTimeSlot[]
+}
+
+model TimeSlot {
+  id             String           @id @default(cuid())
+  date           DateTime
+  BookedTimeSlot BookedTimeSlot[]
+}
+
+model BookedTimeSlot {
+  id       String   @id @default(cuid())
+  space    Space    @relation(fields: [spaceId], references: [id])
+  timeSlot TimeSlot @relation(fields: [timeSlotId], references: [id])
+  bookedBy User     @relation(fields: [userId], references: [id])
+
+  spaceId    String
+  timeSlotId String
+  userId     String
+
+  @@unique([spaceId, timeSlotId])
 }

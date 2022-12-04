@@ -21,6 +21,13 @@
 			"problemMatcher": [],
 			"label": "npm: prisma:dbpush",
 			"detail": "prisma db push"
+		},
+		{
+			"type": "npm",
+			"script": "prisma:generate",
+			"problemMatcher": [],
+			"label": "npm: prisma:generate",
+			"detail": "prisma generate"
 		}
 	]
 }
