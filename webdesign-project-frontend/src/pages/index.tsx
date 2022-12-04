@@ -4,9 +4,17 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+  const router = useRouter()
+
+  function clickHandler(e:any) {
+    e.preventDefault()
+router.push("./test")
+
+  }
 
   return (
     <>
@@ -36,6 +44,17 @@ const Home: NextPage = () => {
               href="https://create.t3.gg/en/introduction"
             >
               <h3 className="text-2xl font-bold">Documentation →</h3>
+              <div className="text-lg">
+                Learn more about Create T3 App, the libraries it uses, and how
+                to deploy it.
+              </div>
+            </Link>
+              <button onClick={clickHandler} >click me</button>
+            <Link
+              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+              href="./test"
+            >
+              <h3 className="text-2xl font-bold">Test →</h3>
               <div className="text-lg">
                 Learn more about Create T3 App, the libraries it uses, and how
                 to deploy it.
