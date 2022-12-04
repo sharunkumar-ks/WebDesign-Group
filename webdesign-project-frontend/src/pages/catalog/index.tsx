@@ -1,11 +1,9 @@
 import type { NextPage } from "next";
 import Cards from "../../components/Cards";
-import Navbar from "../../components/NavBar";
 
 const Catalog: NextPage = () => {
 
     return <>
-        <Navbar />
         <br />
 
         <center> <strong>Our Catalog</strong></center>
@@ -31,7 +29,7 @@ const Catalog: NextPage = () => {
                 by going to the official <a className="text-blue-600 hover:underline"
                     href="#" target="_blank">Flowbite Documentation</a>.
             </p>
-            <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+            {/* <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script> */}
         </div>
         <br />
         <table>

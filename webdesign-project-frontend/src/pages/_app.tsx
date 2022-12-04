@@ -4,7 +4,10 @@ import { SessionProvider } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
-import "../styles/globals.css";
+// import "../styles/globals.css";
+
+import 'bootstrap/dist/css/bootstrap.css';
+import Navbar from "../components/NavBar";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -12,6 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Navbar />
       <Component {...pageProps} />
     </SessionProvider>
   );

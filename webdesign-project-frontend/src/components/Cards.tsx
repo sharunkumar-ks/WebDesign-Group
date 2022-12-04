@@ -10,7 +10,7 @@ const Cards = () => <div className="flex flex-wrap flex-row sm:flex-col w-full p
         </a>
         <div className="flex items-center mt-2.5 mb-5">
 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+            Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.
         </div>
         <div className="flex items-center justify-between">
             <span className="text-1xl text-gray-500 dark:text-white">Name & Date</span>
