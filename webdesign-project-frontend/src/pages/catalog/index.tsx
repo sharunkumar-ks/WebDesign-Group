@@ -27,10 +27,10 @@ const Catalog: NextPage = () => {
         <br />
         <table>
             <tbody>
-                <tr><td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" />
+                <tr><td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="1" />
                 </td>
-                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" /></td>
-                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" />
+                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="2" /></td>
+                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="3" />
                     </td>
                 </tr>
                 <tr><td></td>
