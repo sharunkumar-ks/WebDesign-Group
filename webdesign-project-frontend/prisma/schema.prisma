@@ -79,6 +79,8 @@ model Space {
   location       Location         @relation(fields: [locationId], references: [id])
   locationId     String
   BookedTimeSlot BookedTimeSlot[]
+
+  @@unique([title, locationId])
 }
 
 model TimeSlot {

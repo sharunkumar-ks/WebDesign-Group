@@ -1,7 +1,12 @@
 import type { NextPage } from "next";
 import ProductCatalogCard from "../../components/ProductCatalogCard";
+import { trpc } from "../../utils/trpc";
 
 const Catalog: NextPage = () => {
+
+    const allSpaces = trpc.catalog.getAllSpaces.useQuery();
+
+    console.log({ allSpaces })
 
     return <>
         <br />
@@ -25,25 +30,9 @@ const Catalog: NextPage = () => {
             </div>
         </div>
         <br />
-        <table>
-            <tbody>
-                <tr><td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="1" />
-                </td>
-                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="2" /></td>
-                    <td><ProductCatalogCard title="Card Title" text="Description" image="carousel-2.png" id="3" />
-                    </td>
-                </tr>
-                <tr><td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr><td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-
+        <div className="d-flex">
+            {allSpaces.data?.spaces.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
+        </div>
     </>
 }
 
