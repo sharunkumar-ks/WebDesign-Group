@@ -83,7 +83,7 @@ model Space {
 
 model TimeSlot {
   id             String           @id @default(cuid())
-  date           DateTime
+  date           DateTime         @unique
   BookedTimeSlot BookedTimeSlot[]
 }
 

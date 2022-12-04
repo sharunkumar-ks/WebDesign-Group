@@ -28,6 +28,13 @@
 			"problemMatcher": [],
 			"label": "npm: prisma:generate",
 			"detail": "prisma generate"
-		}
+		},
+		{
+			"type": "npm",
+			"script": "prisma:migrate",
+			"problemMatcher": [],
+			"label": "npm: prisma:migrate",
+			"detail": "prisma migrate dev"
+		},
 	]
 }
