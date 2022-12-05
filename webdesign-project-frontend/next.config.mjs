@@ -13,5 +13,14 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/landing",
+        destination: "/landing/index.html",
+        permanent: true
+      },
+    ]
+  }
 };
 export default config;
