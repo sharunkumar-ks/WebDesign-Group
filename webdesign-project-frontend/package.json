@@ -10,6 +10,7 @@
     "start": "next start",
     "prisma:studio": "prisma studio",
     "prisma:dbpush": "prisma db push",
+    "prisma:dbseed": "prisma db seed",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate"
   },

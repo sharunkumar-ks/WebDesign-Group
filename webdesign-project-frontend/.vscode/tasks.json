@@ -36,5 +36,12 @@
 			"label": "npm: prisma:migrate",
 			"detail": "prisma migrate dev"
 		},
+		{
+			"type": "npm",
+			"script": "prisma:dbseed",
+			"problemMatcher": [],
+			"label": "npm: prisma:dbseed",
+			"detail": "prisma db seed"
+		}
 	]
 }

@@ -30,7 +30,7 @@ const Catalog: NextPage = () => {
             </div>
         </div>
         <br />
-        <div className="d-flex justify-content-center">
+        <div className="d-flex flex-wrap justify-content-center">
             {allSpaces.data?.spaces.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
         </div>
     </>

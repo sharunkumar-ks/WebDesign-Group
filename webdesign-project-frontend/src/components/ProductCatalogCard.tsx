@@ -9,7 +9,7 @@ type ProductCatalogProps = {
 }
 
 
-const ProductCatalogCard = (props: ProductCatalogProps) => <div className="card mx-2" style={{ maxWidth: "300px" }}>
+const ProductCatalogCard = (props: ProductCatalogProps) => <div className="card mx-2 my-2" style={{ maxWidth: "300px" }}>
     <img src={props.image} className="card-img-top" alt="..." />
     <div className="card-body">
         <h5 className="card-title">{props.space.title}</h5>

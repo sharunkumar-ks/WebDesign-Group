@@ -55,8 +55,12 @@ async function main() {
     const spaces = [
         await addSpace("101", "Office Room", snell),
         await addSpace("102", "Office Room", snell),
+        await addSpace("103", "Office Room", snell),
+        await addSpace("104", "Office Room", snell),
         await addSpace("101", "Office Room", curry),
         await addSpace("102", "Office Room", curry),
+        await addSpace("103", "Office Room", curry),
+        await addSpace("104", "Office Room", curry),
     ]
 
     console.log({ spaces })
