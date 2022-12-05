@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Location, Space } from "@prisma/client";
 import Link from "next/link"
 

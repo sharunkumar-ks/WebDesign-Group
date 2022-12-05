@@ -1,17 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
-import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-  const router = useRouter()
-
-  function clickHandler(e: any) {
-    e.preventDefault()
-    router.push("./test")
-
-  }
 
   return (
     <>
