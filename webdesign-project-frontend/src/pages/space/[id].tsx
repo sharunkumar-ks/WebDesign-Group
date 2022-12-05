@@ -11,7 +11,7 @@ const OfficeSpace: NextPage = () => {
 
     return <>
         <h1>Office Space of ID {id}</h1>
-        <button type="button" className="btn btn-primary"><Link href={"/payment {id}"}>Book</Link></button>
+        <button type="button" className="btn btn-primary"><Link href={`/payment/${id}`}>Book</Link></button>
     </>
 }
 
