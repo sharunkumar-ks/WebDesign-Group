@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { trpc } from "../utils/trpc";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 
 const Navbar = () => <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,12 +36,28 @@ const Navbar = () => <nav className="navbar navbar-expand-lg navbar-dark bg-dark
                     <a className="nav-link disabled" href="#" aria-disabled="true">Disabled</a>
                 </li> */}
             </ul>
-            {/* <form className="d-flex">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success" type="submit">Search</button>
-            </form> */}
+            <AuthShowcase />
         </div>
     </div>
 </nav>
 
 export default Navbar
+
+const AuthShowcase: React.FC = () => {
+    const { data: sessionData } = useSession();
+
+    return (
+        <div className="">
+            <div className="text-center text-2xl text-white my-1">
+                {sessionData && <span>Logged in as {sessionData.user?.name} &nbsp;&nbsp;</span>}
+                <button
+                    className={`btn btn-${sessionData ? 'danger' : 'primary'}`}
+                    onClick={sessionData ? () => signOut() : () => signIn()}
+                >
+                    {sessionData ? "Sign out" : "Sign in"}
+                </button>
+            </div>
+
+        </div>
+    );
+};
