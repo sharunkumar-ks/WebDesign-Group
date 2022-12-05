@@ -27,4 +27,20 @@ export const catalogRouter = router({
             };
         }),
 
+    getBookingsOfUser: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .query(async ({ ctx, input }) => {
+            return {
+                spaces: await ctx.prisma.bookedTimeSlot.findMany({
+                    where: {
+                        userId: input.id
+                    },
+                    include: {
+                        space: true,
+                        timeSlot: true,
+                        bookedBy: true,
+                    }
+                })
+            };
+        }),
 });
