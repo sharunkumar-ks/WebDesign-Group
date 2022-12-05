@@ -1,6 +1,4 @@
 import { type NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import { useRouter } from "next/router";
@@ -244,9 +242,9 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="social d-flex justify-content-center">
-            <a className="mx-2" href="https://twitter.com/" target="_blank"><i className="fab fa-twitter"></i></a>
-            <a className="mx-2" href="https://www.instagram.com/" target="_blank"><i className="fab fa-instagram"></i></a>
-            <a className="mx-2" href="https://github.com/sharunkumar-ks/WebDesign-Group" target="_blank"><i
+            <a className="mx-2" href="https://twitter.com/"><i className="fab fa-twitter"></i></a>
+            <a className="mx-2" href="https://www.instagram.com/"><i className="fab fa-instagram"></i></a>
+            <a className="mx-2" href="https://github.com/sharunkumar-ks/WebDesign-Group"><i
               className="fab fa-github"></i></a>
           </div>
         </div>

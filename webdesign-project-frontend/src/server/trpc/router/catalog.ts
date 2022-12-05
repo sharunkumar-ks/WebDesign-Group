@@ -4,7 +4,6 @@ import { router, publicProcedure } from "../trpc";
 
 export const catalogRouter = router({
     getAllSpaces: publicProcedure
-        .input(z.object({ text: z.string().nullish() }).nullish())
         .query(async ({ ctx }) => {
             return {
                 spaces: await ctx.prisma.space.findMany({
@@ -17,9 +16,14 @@ export const catalogRouter = router({
 
     getSpaceById: publicProcedure
         .input(z.object({ id: z.string() }))
-        .query(({ ctx, input }) => {
+        .query(async ({ ctx, input }) => {
             return {
-                spaces: ctx.prisma.space.findFirst({ where: { id: input.id } })
+                space: await ctx.prisma.space.findFirst({
+                    where: { id: input.id },
+                    include: {
+                        location: true
+                    }
+                })
             };
         }),
 

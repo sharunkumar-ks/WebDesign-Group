@@ -6,8 +6,6 @@ const Catalog: NextPage = () => {
 
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
 
-    console.log({ allSpaces })
-
     return <>
         <br />
 
