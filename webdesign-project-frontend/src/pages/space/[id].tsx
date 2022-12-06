@@ -16,10 +16,15 @@ const OfficeSpace: NextPage = () => {
 
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
 
-    const [value, setValue] = useState(null);
-    const handleSelect = (e: any) => {
+    const [date, setDate] = useState(null)
+    const [timeSlot, setTimeSlot] = useState(null);
+    const handleSelectTimeSlot = (e: any) => {
         console.log(e);
-        setValue(e)
+        setTimeSlot(e)
+    }
+    const handleSelectDate = (e: any) => {
+        console.log(e);
+        setDate(e)
     }
 
     return <>
@@ -28,10 +33,14 @@ const OfficeSpace: NextPage = () => {
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
+
+            </div>
+
+            <div className="d-flex">
                 <DropdownButton
-                    title={value ? value : "Select Time Slot"}
+                    title={date ? date : "Select Date"}
                     id="dropdown-menu-align-right"
-                    onSelect={handleSelect}
+                    onSelect={handleSelectDate}
                 >
                     <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
                     <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
@@ -39,8 +48,20 @@ const OfficeSpace: NextPage = () => {
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
                 </DropdownButton>
+                <DropdownButton
+                    title={timeSlot ? timeSlot : "Select Time Slot"}
+                    id="dropdown-menu-align-right"
+                    onSelect={handleSelectTimeSlot}
+                >
+                    <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
+                    <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
+                    <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
+                </DropdownButton>
+                <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
             </div>
-            <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
+
         </div>
 
     </>
