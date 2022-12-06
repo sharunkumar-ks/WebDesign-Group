@@ -16,7 +16,7 @@ const OfficeSpace: NextPage = () => {
     return <>
         <h1>Office Space of ID {data?.space?.id}</h1>
         <h1>Office Space of Name {data?.space?.title}</h1>
-        <button type="button" className="btn btn-primary"><Link href={`/payment/${id}`}>Book</Link></button>
+        <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
     </>
 }
 
