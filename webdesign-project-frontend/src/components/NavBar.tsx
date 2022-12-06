@@ -27,6 +27,16 @@ const Navbar = () => {
                             My Bookings
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link href={"/addspace"} className={`nav-link ${router.pathname == '/addspace' ? 'active' : ''}`}>
+                            Add Workspace
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link href={"/myspaces"} className={`nav-link ${router.pathname == '/myspaces' ? 'active' : ''}`}>
+                            My Workspaces
+                        </Link>
+                    </li>
                     {/* <li className="nav-item">
                     <a className="nav-link" href="#">Link</a>
                 </li>
