@@ -1,14 +1,16 @@
 import type { NextPage } from "next";
 import ProductCatalogCard from "../../components/ProductCatalogCard";
 import { trpc } from "../../utils/trpc";
+import background from "../../../public/assets/img/bg-masthead.jpg"
 
 const Catalog: NextPage = () => {
 
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
 
-    return <>
-        <br />
 
+
+    return <div>
+        <br />
         <div className="max-w-2xl mx-auto">
 
             <div className="container">
@@ -31,7 +33,7 @@ const Catalog: NextPage = () => {
         <div className="d-flex flex-wrap justify-content-center">
             {allSpaces.data?.spaces.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
         </div>
-    </>
+    </div>
 }
 
 export default Catalog

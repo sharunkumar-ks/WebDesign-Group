@@ -29,7 +29,7 @@ const OfficeSpace: NextPage = () => {
 
     return <>
         <div className="card container my-5">
-            <img src="../carousel-2.png" className="card-img-top my-0" alt="..." />
+            <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
@@ -47,7 +47,7 @@ const OfficeSpace: NextPage = () => {
                     <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
-                </DropdownButton>
+                </DropdownButton>&nbsp;
                 <DropdownButton
                     title={timeSlot ? timeSlot : "Select Time Slot"}
                     id="dropdown-menu-align-right"
@@ -58,10 +58,10 @@ const OfficeSpace: NextPage = () => {
                     <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
-                </DropdownButton>
+                </DropdownButton>&nbsp;
                 <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
             </div>
-
+            <br />
         </div>
 
     </>
