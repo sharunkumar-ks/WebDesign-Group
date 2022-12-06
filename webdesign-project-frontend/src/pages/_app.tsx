@@ -8,6 +8,7 @@ import "../styles/globals.css";
 
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from "../components/NavBar";
+import Script from "next/script";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -15,6 +16,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossOrigin="anonymous"
+      />
       <Navbar />
       <Component {...pageProps} />
     </SessionProvider>
