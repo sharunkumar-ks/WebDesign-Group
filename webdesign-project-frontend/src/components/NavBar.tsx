@@ -1,24 +1,33 @@
 import Link from "next/link"
 import { trpc } from "../utils/trpc";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 
-const Navbar = () => <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className="container-fluid">
-        <Link href={"/"} className="navbar-brand">
-            RoomTree
-        </Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                    <Link href={"/catalog"} className="nav-link active">
-                        Catalog
-                    </Link>
-                </li>
-                {/* <li className="nav-item">
+const Navbar = () => {
+    const router = useRouter()
+    console.log(router.pathname)
+    return <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+            <Link href={"/"} className="navbar-brand">
+                RoomTree
+            </Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                        <Link href={"/catalog"} className={`nav-link ${router.pathname == '/catalog' ? 'active' : ''}`}>
+                            Catalog
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link href={"/history"} className={`nav-link ${router.pathname == '/history' ? 'active' : ''}`}>
+                            My Bookings
+                        </Link>
+                    </li>
+                    {/* <li className="nav-item">
                     <a className="nav-link" href="#">Link</a>
                 </li>
                 <li className="nav-item dropdown">
@@ -35,11 +44,12 @@ const Navbar = () => <nav className="navbar navbar-expand-lg navbar-dark bg-dark
                 <li className="nav-item">
                     <a className="nav-link disabled" href="#" aria-disabled="true">Disabled</a>
                 </li> */}
-            </ul>
-            <AuthShowcase />
+                </ul>
+                <AuthShowcase />
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+}
 
 export default Navbar
 
