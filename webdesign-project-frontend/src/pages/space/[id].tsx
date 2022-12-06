@@ -19,6 +19,33 @@ const OfficeSpace: NextPage = () => {
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
+                <div className="dropdown">
+                    <button
+                        type="button"
+                        className="btn btn-primary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                    >
+                        Dropdown button
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li>
+                            <a className="dropdown-item" href="#">
+                                Link 1
+                            </a>
+                        </li>
+                        <li>
+                            <a className="dropdown-item" href="#">
+                                Link 2
+                            </a>
+                        </li>
+                        <li>
+                            <a className="dropdown-item" href="#">
+                                Link 3
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
             </div>
         </div>
