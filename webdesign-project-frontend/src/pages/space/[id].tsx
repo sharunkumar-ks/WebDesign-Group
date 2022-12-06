@@ -14,9 +14,15 @@ const OfficeSpace: NextPage = () => {
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
 
     return <>
-        <h1>Office Space of ID {data?.space?.id}</h1>
-        <h1>Office Space of Name {data?.space?.title}</h1>
-        <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
+        <div className="card container my-5">
+            <img src="../carousel-2.png" className="card-img-top my-0" alt="..." />
+            <div className="card-body">
+                <h5 className="card-title">{data?.space?.title}</h5>
+                <p className="card-text">{data?.space?.description}</p>
+                <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
+            </div>
+        </div>
+
     </>
 }
 
