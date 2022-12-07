@@ -34,6 +34,11 @@ const OfficeSpace: NextPage = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [showRemove, setShowRemove] = useState(false);
+
+    const handleCloseRemove = () => setShowRemove(false);
+    const handleShowRemove = () => setShowRemove(true);
+
     return <>
         <div className="card container my-5">
             <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
@@ -48,7 +53,9 @@ const OfficeSpace: NextPage = () => {
                     Edit
                 </Button>
                 &nbsp;
-                <Link className="btn btn-primary" href={"#"}>Remove</Link>
+                <Button variant="primary" onClick={handleShowRemove}>
+                    Remove
+                </Button>
             </div>
             <br />
         </div>
@@ -56,7 +63,7 @@ const OfficeSpace: NextPage = () => {
             <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>Edit Details</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
@@ -66,6 +73,22 @@ const OfficeSpace: NextPage = () => {
                 </Button>
             </Modal.Footer>
         </Modal>
+
+        <Modal show={showRemove} onHide={handleCloseRemove}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Remove Details</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseRemove}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleCloseRemove}>
+                    Ok
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
     </>
 }
 
