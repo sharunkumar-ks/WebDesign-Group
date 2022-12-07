@@ -16,6 +16,7 @@ const Catalog: NextPage = () => {
     }
 
     const [filteredSpaces, setFilteredSpaces] = useState(allSpaces.data?.spaces)
+    console.log("filteredSpaces", filteredSpaces)
 
     useEffect(() => {
         setFilteredSpaces(
@@ -30,7 +31,7 @@ const Catalog: NextPage = () => {
             })
         )
 
-    }, [searchTerm])
+    }, [searchTerm, allSpaces.data?.spaces])
 
     return <div className="catalog-bg">
         <br />
