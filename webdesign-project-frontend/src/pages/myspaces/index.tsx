@@ -2,10 +2,35 @@ import type { NextPage } from "next";
 
 import AdminCard from "../../components/AdminCard";
 import { trpc } from "../../utils/trpc";
+import { useEffect, useState } from "react";
 
 const MyOfficeSpaces: NextPage = () => {
 
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const searchSpace = (e: any) => {
+        let keyword = e.target.value;
+        setSearchTerm(keyword);
+        console.log(searchTerm)
+    }
+    const [filteredSpaces, setFilteredSpaces] = useState(allSpaces.data?.spaces)
+
+    useEffect(() => {
+        setFilteredSpaces(
+            allSpaces.data?.spaces.filter((value) => {
+                if (searchTerm === "") {
+                    return true;
+                }
+                else if (JSON.stringify(value).toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return true;
+                }
+                return false;
+            })
+        )
+
+    }, [searchTerm, allSpaces.data?.spaces])
+
 
 
     return <div>
@@ -20,7 +45,7 @@ const MyOfficeSpaces: NextPage = () => {
 
                         <div className="search">
 
-                            <input type="text" className="form-control" placeholder="Search Office Spaces" />
+                            <input type="text" className="form-control" placeholder="Search Office Spaces" onChange={(e) => searchSpace(e)} />
                         </div>
 
                     </div>
@@ -30,7 +55,7 @@ const MyOfficeSpaces: NextPage = () => {
         </div>
         <br />
         <div className="d-flex flex-wrap justify-content-center">
-            {allSpaces.data?.spaces.map(space => <AdminCard key={space.id} image="carousel-2.png" space={space} />)}
+            {filteredSpaces?.map(space => <AdminCard key={space.id} image="carousel-2.png" space={space} />)}
         </div>
     </div>
 }
