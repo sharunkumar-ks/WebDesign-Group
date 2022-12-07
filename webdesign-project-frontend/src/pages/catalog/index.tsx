@@ -1,12 +1,19 @@
 import type { NextPage } from "next";
 import ProductCatalogCard from "../../components/ProductCatalogCard";
 import { trpc } from "../../utils/trpc";
+import { useState } from "react";
 
 const Catalog: NextPage = () => {
 
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
 
+    const [search, setSearch] = useState(null);
 
+    const searchSpace = (e: any) => {
+        let keyword = e.target.value;
+        setSearch(keyword);
+        console.log(search)
+    }
 
     return <div className="catalog-bg">
         <br />
@@ -20,7 +27,7 @@ const Catalog: NextPage = () => {
 
                         <div className="search">
 
-                            <input type="text" className="form-control" placeholder="Search Office Spaces" />
+                            <input type="text" className="form-control" placeholder="Search Office Spaces" onChange={(e) => searchSpace(e)} />
                         </div>
 
                     </div>
