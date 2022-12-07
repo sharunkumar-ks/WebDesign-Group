@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 
 const AddOfficeSpace: NextPage = () => {
 
-    return <>
+    return <div className="container">
+        <br />
         <h1>Add new workspace</h1>
         <form className="row g-3">
             <div className="col-md-6">
@@ -56,7 +57,7 @@ const AddOfficeSpace: NextPage = () => {
                 <button type="submit" className="btn btn-primary">Add</button>
             </div>
         </form>
-    </>
+    </div>
 }
 
 export default AddOfficeSpace
