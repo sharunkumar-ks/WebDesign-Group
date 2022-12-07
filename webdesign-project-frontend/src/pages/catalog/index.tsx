@@ -1,19 +1,36 @@
 import type { NextPage } from "next";
 import ProductCatalogCard from "../../components/ProductCatalogCard";
 import { trpc } from "../../utils/trpc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Catalog: NextPage = () => {
 
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
 
-    const [search, setSearch] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const searchSpace = (e: any) => {
         let keyword = e.target.value;
-        setSearch(keyword);
-        console.log(search)
+        setSearchTerm(keyword);
+        console.log(searchTerm)
     }
+
+    const [filteredSpaces, setFilteredSpaces] = useState(allSpaces.data?.spaces)
+
+    useEffect(() => {
+        setFilteredSpaces(
+            allSpaces.data?.spaces.filter((value) => {
+                if (searchTerm === "") {
+                    return true;
+                }
+                else if (JSON.stringify(value).toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return true
+                }
+                return false
+            })
+        )
+
+    }, [searchTerm])
 
     return <div className="catalog-bg">
         <br />
@@ -37,7 +54,11 @@ const Catalog: NextPage = () => {
         </div>
         <br />
         <div className="d-flex flex-wrap justify-content-center">
-            {allSpaces.data?.spaces.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
+
+
+
+
+            {filteredSpaces?.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
         </div>
     </div>
 }
