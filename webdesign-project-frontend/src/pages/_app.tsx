@@ -21,8 +21,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossOrigin="anonymous"
       />
+      {/* <div className="wrapper-element"> */}
       <Navbar />
       <Component {...pageProps} />
+      {/* </div> */}
     </SessionProvider>
   );
 };
