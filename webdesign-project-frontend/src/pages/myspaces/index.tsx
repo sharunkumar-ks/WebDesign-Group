@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 
-import ProductCatalogCard from "../../components/AdminCard";
+import AdminCard from "../../components/AdminCard";
 import { trpc } from "../../utils/trpc";
 
 const MyOfficeSpaces: NextPage = () => {
@@ -30,7 +30,7 @@ const MyOfficeSpaces: NextPage = () => {
         </div>
         <br />
         <div className="d-flex flex-wrap justify-content-center">
-            {allSpaces.data?.spaces.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
+            {allSpaces.data?.spaces.map(space => <AdminCard key={space.id} image="carousel-2.png" space={space} />)}
         </div>
     </div>
 }
