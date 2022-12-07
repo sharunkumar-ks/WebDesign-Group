@@ -7,6 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 const OfficeSpace: NextPage = () => {
 
@@ -17,6 +18,24 @@ const OfficeSpace: NextPage = () => {
     const id_string: string = id?.toString() || ""
 
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
+    console.log("hiiiiii/", data)
+    // space
+    // : 
+    // description
+    // : 
+    // "Office Room"
+    // id
+    // : 
+    // "clba4s4z70008s8r62yia359l"
+    // location
+    // : 
+    // {id: 'clba4s4z40004s8r6nzznpge0', name: 'Snell'}
+    // locationId
+    // : 
+    // "clba4s4z40004s8r6nzznpge0"
+    // title
+    // : 
+    // "101"
 
     const [date, setDate] = useState(null)
     const [timeSlot, setTimeSlot] = useState(null);
@@ -63,7 +82,20 @@ const OfficeSpace: NextPage = () => {
             <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Edit Details</Modal.Body>
+            <Modal.Body><Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" value={data?.space?.title} />
+                    {/* <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text> */}
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type="text" value={data?.space?.description} />
+                </Form.Group>
+            </Form></Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
