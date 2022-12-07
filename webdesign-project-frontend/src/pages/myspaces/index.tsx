@@ -9,8 +9,8 @@ const MyOfficeSpaces: NextPage = () => {
     const allSpaces = trpc.catalog.getAllSpaces.useQuery();
     const [searchTerm, setSearchTerm] = useState("");
 
-    const searchSpace = (e: any) => {
-        const keyword = e.target.value;
+    const searchSpace = (e: React.FormEvent<HTMLInputElement>) => {
+        const keyword = e.currentTarget.value;
         setSearchTerm(keyword);
         console.log(searchTerm)
     }

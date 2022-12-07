@@ -9,8 +9,8 @@ const Catalog: NextPage = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
 
-    const searchSpace = (e: any) => {
-        let keyword = e.target.value;
+    const searchSpace = (e: React.FormEvent<HTMLInputElement>) => {
+        const keyword = e.currentTarget.value;
         setSearchTerm(keyword);
         console.log(searchTerm)
     }
