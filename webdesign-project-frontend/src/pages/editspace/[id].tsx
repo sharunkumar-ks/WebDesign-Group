@@ -37,28 +37,6 @@ const OfficeSpace: NextPage = () => {
             </div>
 
             <div className="d-flex">
-                <DropdownButton
-                    title={date ? date : "Select Date"}
-                    id="dropdown-menu-align-right"
-                    onSelect={handleSelectDate}
-                >
-                    <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
-                    <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
-                    <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
-                </DropdownButton>&nbsp;
-                <DropdownButton
-                    title={timeSlot ? timeSlot : "Select Time Slot"}
-                    id="dropdown-menu-align-right"
-                    onSelect={handleSelectTimeSlot}
-                >
-                    <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
-                    <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
-                    <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
-                </DropdownButton>&nbsp;
                 <Link className="btn btn-primary" href={"#"}>Edit</Link>&nbsp;
                 <Link className="btn btn-primary" href={"#"}>Remove</Link>
             </div>
