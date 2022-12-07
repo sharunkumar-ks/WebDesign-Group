@@ -5,6 +5,8 @@ import { trpc } from "../../utils/trpc";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import { useState } from "react";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const OfficeSpace: NextPage = () => {
 
@@ -27,6 +29,11 @@ const OfficeSpace: NextPage = () => {
         setDate(e)
     }
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return <>
         <div className="card container my-5">
             <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
@@ -37,12 +44,28 @@ const OfficeSpace: NextPage = () => {
             </div>
 
             <div className="d-flex">
-                <Link className="btn btn-primary" href={"#"}>Edit</Link>&nbsp;
+                <Button variant="primary" onClick={handleShow}>
+                    Edit
+                </Button>
+                &nbsp;
                 <Link className="btn btn-primary" href={"#"}>Remove</Link>
             </div>
             <br />
         </div>
-
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </>
 }
 
