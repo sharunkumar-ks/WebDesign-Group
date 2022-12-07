@@ -72,6 +72,12 @@ export default Navbar
 
 const AuthShowcase: React.FC = () => {
     const { data: sessionData } = useSession();
+    const router = useRouter()
+
+    function signOutHandler() {
+        signOut()
+        router.push("/catalog")
+    }
 
     return (
         <div className="">
@@ -79,7 +85,7 @@ const AuthShowcase: React.FC = () => {
                 {sessionData && <span>Logged in as {sessionData.user?.name} &nbsp;&nbsp;</span>}
                 <button
                     className={`btn btn-${sessionData ? 'danger' : 'primary'}`}
-                    onClick={sessionData ? () => signOut() : () => signIn()}
+                    onClick={sessionData ? () => signOutHandler() : () => signIn()}
                 >
                     {sessionData ? "Sign out" : "Sign in"}
                 </button>
