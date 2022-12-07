@@ -10,7 +10,7 @@ const MyOfficeSpaces: NextPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const searchSpace = (e: any) => {
-        let keyword = e.target.value;
+        const keyword = e.target.value;
         setSearchTerm(keyword);
         console.log(searchTerm)
     }

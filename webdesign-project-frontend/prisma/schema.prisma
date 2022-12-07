@@ -101,3 +101,13 @@ model BookedTimeSlot {
 
   @@unique([spaceId, timeSlotId])
 }
+
+model AdminUsers {
+  id    String @id @default(cuid())
+  email String @unique
+}
+
+model OwnerUsers {
+  id    String @id @default(cuid())
+  email String @unique
+}

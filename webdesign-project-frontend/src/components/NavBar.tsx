@@ -1,11 +1,19 @@
 import Link from "next/link"
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { trpc } from "../utils/trpc";
 
 
 const Navbar = () => {
     const router = useRouter()
-    console.log(router.pathname)
+
+    const { data: sessionData } = useSession()
+
+    const email = sessionData?.user?.email
+
+    const isAdminUser = trpc.user.isUserAdmin.useQuery({ email: email + "" }).data
+    const isOwnerUser = trpc.user.isUserOwner.useQuery({ email: email + "" }).data
+
     return <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
             <Link href={"/"} className="navbar-brand">
@@ -21,21 +29,21 @@ const Navbar = () => {
                             Catalog
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    {sessionData?.user && <li className="nav-item">
                         <Link href={"/history"} className={`nav-link ${router.pathname == '/history' ? 'active' : ''}`}>
                             My Bookings
                         </Link>
-                    </li>
-                    <li className="nav-item">
+                    </li>}
+                    {(isOwnerUser || isAdminUser) && <li className="nav-item">
                         <Link href={"/addspace"} className={`nav-link ${router.pathname == '/addspace' ? 'active' : ''}`}>
                             Add Workspace
                         </Link>
-                    </li>
-                    <li className="nav-item">
+                    </li>}
+                    {(isOwnerUser || isAdminUser) && <li className="nav-item">
                         <Link href={"/myspaces"} className={`nav-link ${router.pathname == '/myspaces' ? 'active' : ''}`}>
                             My Workspaces
                         </Link>
-                    </li>
+                    </li>}
                     {/* <li className="nav-item">
                     <a className="nav-link" href="#">Link</a>
                 </li>

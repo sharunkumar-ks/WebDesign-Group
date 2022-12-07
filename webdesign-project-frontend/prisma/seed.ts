@@ -1,4 +1,4 @@
-import type { Location } from '@prisma/client';
+import type { Location, User } from '@prisma/client';
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -29,14 +29,14 @@ async function addSpace(title: string, description: string, location: Location) 
         where: {
             title_locationId: {
                 title: title,
-                locationId: location.id
+                locationId: location.id,
             }
         },
         update: {},
         create: {
             title: title,
             description: description,
-            locationId: location.id
+            locationId: location.id,
         },
     })
 }
@@ -48,6 +48,30 @@ async function addTimeSlot(date: Date) {
         }, update: {}
         , create: {
             date: date
+        }
+    })
+}
+
+async function addAdminUser(email: string) {
+    return await prisma.adminUsers.upsert({
+        where: {
+            email: email
+        },
+        update: {},
+        create: {
+            email: email
+        }
+    })
+}
+
+async function addOwnerUser(email: string) {
+    return await prisma.ownerUsers.upsert({
+        where: {
+            email: email
+        },
+        update: {},
+        create: {
+            email: email
         }
     })
 }
@@ -94,6 +118,14 @@ async function main() {
         }
 
     }
+
+    // setting the admin and owner users
+    await addAdminUser("sharunksplus@gmail.com")
+    await addOwnerUser("sharunksplus@gmail.com")
+    // await addOwnerUser("sharunkumar.ks.95@gmail.com")
+    // await addOwnerUser("rajastelang@gmail.com")
+    // await addOwnerUser("apoorva22jain@gmail.com")
+    // await addOwnerUser("mihirsheth77@gmail.com")
 }
 
 main()
