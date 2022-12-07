@@ -15,11 +15,11 @@ a {
   box-sizing: border-box;
 }
 
-.wrapper-element {
+body {
   display: block;
   left: 0;
   top: 0;
-  background-image: url("cool-background.png");
+  background-image: url("pexels-grayom-11440132.jpg");
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
