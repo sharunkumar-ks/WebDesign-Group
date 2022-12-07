@@ -43,4 +43,12 @@ export const catalogRouter = router({
                 })
             };
         }),
+
+    getTimeSlots: publicProcedure
+        .input(z.object({}).nullish())
+        .query(async ({ ctx }) => {
+            return {
+                timeSlots: await ctx.prisma.timeSlot.findMany({})
+            }
+        })
 });

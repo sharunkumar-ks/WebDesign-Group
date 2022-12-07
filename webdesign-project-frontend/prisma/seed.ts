@@ -41,6 +41,17 @@ async function addSpace(title: string, description: string, location: Location) 
     })
 }
 
+async function addTimeSlot(date: Date) {
+    return await prisma.timeSlot.upsert({
+        where: {
+            date: date,
+        }, update: {}
+        , create: {
+            date: date
+        }
+    })
+}
+
 async function main() {
     const alice = await addUser('alice@prisma.io', 'Alice')
     const bob = await addUser('bob@prisma.io', 'Bob')
@@ -64,7 +75,27 @@ async function main() {
     ]
 
     console.log({ spaces })
+
+    const startDate = new Date()
+
+    startDate.setFullYear(2022, 11, 8)
+    startDate.setHours(8, 0, 0, 0)
+
+    console.log({ startDate })
+
+    for (let day = 0; day < 5; day++) {
+        for (let hour = 0; hour < 12; hour++) {
+            const timeSlot = new Date(startDate)
+
+            timeSlot.setDate(startDate.getDate() + day)
+            timeSlot.setHours(startDate.getHours() + hour)
+
+            await addTimeSlot(timeSlot)
+        }
+
+    }
 }
+
 main()
     .then(async () => {
         await prisma.$disconnect()
