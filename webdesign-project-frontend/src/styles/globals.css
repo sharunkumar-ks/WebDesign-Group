@@ -14,3 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.catalog-bg {
+  background-color: aqua;
+}

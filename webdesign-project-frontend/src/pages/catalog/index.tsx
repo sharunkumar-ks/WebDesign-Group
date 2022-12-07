@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import ProductCatalogCard from "../../components/ProductCatalogCard";
 import { trpc } from "../../utils/trpc";
-import background from "../../../public/assets/img/bg-masthead.jpg"
 
 const Catalog: NextPage = () => {
 
@@ -9,7 +8,7 @@ const Catalog: NextPage = () => {
 
 
 
-    return <div>
+    return <div className="catalog-bg">
         <br />
         <div className="max-w-2xl mx-auto">
 
