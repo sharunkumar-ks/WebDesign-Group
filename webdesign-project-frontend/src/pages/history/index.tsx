@@ -1,13 +1,19 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Card from 'react-bootstrap/Card';
 import BookingHistoryCard from "../../components/BookingHistoryCard";
 import { trpc } from "../../utils/trpc";
 
 const HistoryPage: NextPage = () => {
 
-    const history = trpc.catalog.getBookingsOfUser.useQuery({ id: "" })
+    const { data: sessionData } = useSession();
+
+    const history = trpc.catalog.getBookingsOfUser.useQuery({ id: `${sessionData?.user?.id}` })
 
     const timeSlots = history.data?.spaces;
+
+
+    console.log(history)
 
 
     return <>
@@ -22,7 +28,7 @@ const HistoryPage: NextPage = () => {
             </Card.Body>
         </Card> */}
 
-        {[1, 2, 3].map((item) => <BookingHistoryCard />)}
+        {history.data?.spaces.map((item) => <BookingHistoryCard key={item.id} history={item} image={"assets/img/demo-image-01.jpg"} />)}
         {/* <br /> */}
 
     </>
