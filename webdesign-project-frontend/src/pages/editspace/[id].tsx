@@ -85,7 +85,7 @@ const OfficeSpace: NextPage = () => {
             <Modal.Body><Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" value={data?.space?.title} />
+                    <Form.Control type="text" defaultValue={data?.space?.title} />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
@@ -93,7 +93,7 @@ const OfficeSpace: NextPage = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" value={data?.space?.description} />
+                    <Form.Control type="text" defaultValue={data?.space?.description} />
                 </Form.Group>
             </Form></Modal.Body>
             <Modal.Footer>
