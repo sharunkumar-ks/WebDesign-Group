@@ -5,8 +5,21 @@ import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { Location } from "@prisma/client";
+import Dropdown from 'react-bootstrap/Dropdown'
+
 
 const OfficeSpace: NextPage = () => {
+
+    const locations = trpc.catalog.getLocations.useQuery();
+
+    type ComponentState = {
+        showModal: boolean;
+        newLocationName: string;
+        selectedLocation: Location | null;
+        name: string;
+        description: string;
+    }
 
     const router = useRouter();
 
@@ -14,11 +27,38 @@ const OfficeSpace: NextPage = () => {
 
     const id_string: string = id?.toString() || ""
 
-    const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
+    const { data, refetch: refetchSpace } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
 
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const { mutate: editSpace } = trpc.catalog.editSpace.useMutation({
+        onSuccess: (params) => {
+            refetchSpace()
+            // router.push(`/space/${params.id}`)
+        }
+    })
+
+    const [state, setState] = useState<ComponentState>({
+        showModal: false,
+        newLocationName: "",
+        selectedLocation: null,
+        name: "",
+        description: "",
+    });
+
+    const handleSaveChanges = async () => {
+        editSpace({
+            id: id_string,
+            title: state.name,
+            description: state.description,
+            locationId: state.selectedLocation?.id + ""
+        })
+        setShow(false)
+    }
+
+    const handleClose = () => {
+        setShow(false)
+    };
     const handleShow = () => setShow(true);
 
     const [showRemove, setShowRemove] = useState(false);
@@ -53,7 +93,7 @@ const OfficeSpace: NextPage = () => {
             <Modal.Body><Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" defaultValue={data?.space?.title} />
+                    <Form.Control type="text" defaultValue={data?.space?.title} onChange={(e) => setState({ ...state, name: e.target.value })} />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
@@ -61,14 +101,32 @@ const OfficeSpace: NextPage = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" defaultValue={data?.space?.description} />
+                    <Form.Control type="text" defaultValue={data?.space?.description} onChange={(e) => setState({ ...state, description: e.target.value })} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Location</Form.Label>
+                    {/* <Form.Control type="text" defaultValue={data?.space?.location} onChange={(e) => setState({ ...state, description: e.target.value })} /> */}
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success">{state.selectedLocation ? state.selectedLocation.name : "Select Location"}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {locations.data?.locations?.map((item, idx) => (
+                                <Dropdown.Item key={idx} onClick={() => {
+                                    setState({ ...state, selectedLocation: item });
+                                }
+                                }>
+                                    {item.name}
+                                </Dropdown.Item>
+                            ))}
+
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Form.Group>
             </Form></Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button type="submit" variant="primary" onClick={handleSaveChanges}>
                     Save Changes
                 </Button>
             </Modal.Footer>
