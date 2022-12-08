@@ -76,6 +76,7 @@ const OfficeSpace: NextPage = () => {
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
+                <p className="card-text">{data?.space?.location.name}</p>
 
             </div>
 
