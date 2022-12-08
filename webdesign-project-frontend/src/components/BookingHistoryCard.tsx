@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import dateFormat from "dateformat";
+import { Button } from "react-bootstrap";
 import type { RouterOutputs } from "../utils/trpc";
+import { trpc } from "../utils/trpc";
 import type { Unpacked } from "../utils/typehelpers";
 
 type HistoryOutput = RouterOutputs["catalog"]["getBookingsOfUser"]["spaces"]
@@ -16,10 +18,27 @@ const mystyle = {
 
 const BookingHistoryCard = (props: BookingHistoryProps) => {
     const toTime = new Date(props.history.timeSlot.date)
+    const history = trpc.catalog.getBookingsOfUser.useQuery()
+
+    const { mutate: cancel } = trpc.catalog.cancelBooking.useMutation({
+        onSuccess: () => {
+            alert("Booking cancelled")
+            history.refetch()
+        }
+    })
 
     toTime.setHours(toTime.getHours() + 1)
 
-    return <div className="container card flex-row flex-wrap my-3">
+    async function cancelBooking() {
+        const result = confirm("Are you sure you want to cancel this booking?")
+        if (result) {
+            cancel({
+                id: props.history.id
+            })
+        }
+    }
+
+    return <div className="container card flex-row flex-wrap my-3 py-4">
         <div className="card-header border-0">
             <img src={props.image} style={mystyle} alt="" />
         </div>
@@ -27,6 +46,7 @@ const BookingHistoryCard = (props: BookingHistoryProps) => {
             <h4 className="card-title">{props.history.space.title}</h4>
             <h6 className="card-text">{props.history.space.description}</h6>
             <h6 className="card-text">{dateFormat(props.history.timeSlot.date, "hh:MM TT")} - {dateFormat(toTime, "hh:MM TT")}</h6>
+            <Button variant="danger" className="my-4" onClick={cancelBooking}>Cancel Booking</Button>
         </div>
     </div>
 }

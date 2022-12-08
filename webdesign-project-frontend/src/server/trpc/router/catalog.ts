@@ -29,12 +29,11 @@ export const catalogRouter = router({
         }),
 
     getBookingsOfUser: publicProcedure
-        .input(z.object({ id: z.string() }))
-        .query(async ({ ctx, input }) => {
+        .query(async ({ ctx }) => {
             return {
                 spaces: await ctx.prisma.bookedTimeSlot.findMany({
                     where: {
-                        userId: input.id
+                        userId: ctx.session?.user?.id + ""
                     },
                     include: {
                         space: true,
@@ -151,5 +150,16 @@ export const catalogRouter = router({
             return {
                 bookedTimeSlots
             }
+        }),
+
+    cancelBooking: publicProcedure
+        .input(z.object({ id: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.prisma.bookedTimeSlot
+                .delete({
+                    where: {
+                        id: input.id
+                    }
+                })
         }),
 });

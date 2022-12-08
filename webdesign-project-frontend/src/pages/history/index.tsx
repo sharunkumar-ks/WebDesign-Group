@@ -8,7 +8,7 @@ const HistoryPage: NextPage = () => {
 
     const { data: sessionData } = useSession();
 
-    const history = trpc.catalog.getBookingsOfUser.useQuery({ id: `${sessionData?.user?.id}` })
+    const history = trpc.catalog.getBookingsOfUser.useQuery()
 
     const timeSlots = history.data?.spaces;
 
