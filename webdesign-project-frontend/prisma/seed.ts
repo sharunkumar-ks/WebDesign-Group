@@ -121,6 +121,7 @@ async function main() {
 
     // setting the admin and owner users
     await addAdminUser("sharunksplus@gmail.com")
+    await addAdminUser("rajastelang@gmail.com")
     await addOwnerUser("sharunksplus@gmail.com")
     // await addOwnerUser("sharunkumar.ks.95@gmail.com")
     // await addOwnerUser("rajastelang@gmail.com")
