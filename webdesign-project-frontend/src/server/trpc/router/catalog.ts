@@ -1,3 +1,4 @@
+import type { BookedTimeSlot } from "@prisma/client";
 import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
@@ -121,5 +122,34 @@ export const catalogRouter = router({
                         id: input.id
                     }
                 })
+        }),
+
+    bookTimeSlots: publicProcedure
+        .input(z.object({
+            spaceId: z.string(),
+            timeSlotIds: z.array(z.string()),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            const userId = ctx.session?.user?.id + "";
+
+            const bookedTimeSlots = [] as BookedTimeSlot[];
+
+            for (let index = 0; index < input.timeSlotIds.length; index++) {
+                const element = input.timeSlotIds[index] + "";
+
+                const slot = await ctx.prisma.bookedTimeSlot.create({
+                    data: {
+                        spaceId: input.spaceId,
+                        timeSlotId: element,
+                        userId: userId,
+                    }
+                })
+
+                bookedTimeSlots.push(slot);
+            }
+
+            return {
+                bookedTimeSlots
+            }
         }),
 });
