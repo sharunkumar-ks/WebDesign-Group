@@ -64,6 +64,16 @@ const OfficeSpace: NextPage = () => {
         return dateFormat(date, "hh:MM TT")
     }
 
+    function handleBookButton(e: React.FormEvent<HTMLInputElement>) {
+        console.log({ date, timeSlot, hours })
+
+        if (!date || !timeSlot || !hours) {
+            alert("Select the details")
+            return e.preventDefault();
+        }
+
+    }
+
     return <>
         <div className="card container my-5">
             <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
@@ -97,14 +107,10 @@ const OfficeSpace: NextPage = () => {
                     id="dropdown-menu-align-right"
                     onSelect={handleSelectHours}
                 >
-                    <Dropdown.Item eventKey="1">1</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">2</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">3</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">4</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">5</Dropdown.Item>
+                    {[1, 2, 3, 4, 5].map(item => <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>)}
 
                 </DropdownButton>&nbsp;
-                <Link className="btn btn-primary" href={`/payment/${id}`}>Book</Link>
+                <Link className="btn btn-primary" href={`/payment/${id}`} onClick={handleBookButton}>Book</Link>
             </div>
             <br />
         </div>

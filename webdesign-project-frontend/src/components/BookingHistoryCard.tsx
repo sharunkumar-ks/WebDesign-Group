@@ -1,16 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import type { BookedTimeSlot, Location, Space, TimeSlot } from "@prisma/client";
-import Link from "next/link"
-// @filename: client.ts
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
-import { AppRouter } from "../server/trpc/router/_app";
+import type { RouterOutputs } from "../utils/trpc";
+import type { Unpacked } from "../utils/typehelpers";
 
-type RouterInput = inferRouterInputs<AppRouter>;
-type RouterOutput = inferRouterOutputs<AppRouter>;
-
-type HistoryOutput = RouterOutput["catalog"]["getBookingsOfUser"]["spaces"]
-
-type Unpacked<T> = T extends (infer U)[] ? U : T;
+type HistoryOutput = RouterOutputs["catalog"]["getBookingsOfUser"]["spaces"]
 
 type BookingHistoryProps = {
     image: string;
