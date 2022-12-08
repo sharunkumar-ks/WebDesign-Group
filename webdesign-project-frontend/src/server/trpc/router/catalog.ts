@@ -50,5 +50,42 @@ export const catalogRouter = router({
             return {
                 timeSlots: await ctx.prisma.timeSlot.findMany({})
             }
+        }),
+
+    getLocations: publicProcedure
+        .query(async ({ ctx }) => {
+            return {
+                timeSlots: await ctx.prisma.location.findMany({})
+            }
+        }),
+
+    addLocation: publicProcedure
+        .input(z.object({
+            title: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.prisma.location
+                .create({
+                    data: {
+                        name: input.title,
+                    }
+                })
+        }),
+
+    addSpace: publicProcedure
+        .input(z.object({
+            title: z.string(),
+            description: z.string(),
+            locationId: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.prisma.space
+                .create({
+                    data: {
+                        title: input.title,
+                        description: input.description,
+                        locationId: input.locationId,
+                    }
+                })
         })
 });
