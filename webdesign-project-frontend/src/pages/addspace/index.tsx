@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { useRouter } from "next/router";
+import useUnauthorisedUser from "../../utils/useUnauthorisedUser";
+import NothAuthorised from "../../components/NotAuthorised";
 
 
 type ComponentState = {
@@ -56,6 +58,10 @@ const AddOfficeSpace: NextPage = () => {
             description: state.description,
             locationId: state.selectedLocation?.id + ""
         })
+    }
+
+    if (useUnauthorisedUser()) {
+        return <NothAuthorised />
     }
 
     return <div className="container">

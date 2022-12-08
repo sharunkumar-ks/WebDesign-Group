@@ -3,6 +3,8 @@ import type { NextPage } from "next";
 import AdminCard from "../../components/AdminCard";
 import { trpc } from "../../utils/trpc";
 import { useEffect, useState } from "react";
+import NothAuthorised from "../../components/NotAuthorised";
+import useUnauthorisedUser from "../../utils/useUnauthorisedUser";
 
 const MyOfficeSpaces: NextPage = () => {
 
@@ -32,6 +34,9 @@ const MyOfficeSpaces: NextPage = () => {
     }, [searchTerm, allSpaces.data?.spaces])
 
 
+    if (useUnauthorisedUser()) {
+        return <NothAuthorised />
+    }
 
     return <div>
         <br />
