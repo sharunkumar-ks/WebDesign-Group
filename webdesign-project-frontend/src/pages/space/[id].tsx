@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import type { TimeSlot } from "@prisma/client";
 import dateFormat, { masks } from "dateformat";
 import { Button } from "react-bootstrap";
+import { useSession } from "next-auth/react";
 // import Button from "react-bootstrap/esm/Button";
 
 
@@ -22,6 +23,7 @@ type ComponentState = {
 const OfficeSpace: NextPage = () => {
 
     const router = useRouter();
+    const session = useSession()
 
     const { id } = router.query;
 
@@ -99,6 +101,10 @@ const OfficeSpace: NextPage = () => {
         if (!state.selectedDate || !state.selectedTimeSlot || !state.selectedHours) {
             alert("Select the details")
             return
+        }
+
+        if (!(session.status === "authenticated" && session.data)) {
+            return alert("Log in to book the space")
         }
 
         const index = filteredTimeSlots.indexOf(state.selectedTimeSlot)
