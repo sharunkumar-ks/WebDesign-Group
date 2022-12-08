@@ -18,7 +18,7 @@ const HistoryPage: NextPage = () => {
     }
 
     return <>
-        {history.data?.spaces.map((item) => <BookingHistoryCard key={item.id} history={item} image={"assets/img/demo-image-01.jpg"} />)}
+        {history.data?.spaces.map((item) => <BookingHistoryCard key={item.id} history={item} />)}
     </>
 }
 

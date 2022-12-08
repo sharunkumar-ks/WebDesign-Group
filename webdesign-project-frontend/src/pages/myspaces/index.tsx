@@ -60,7 +60,7 @@ const MyOfficeSpaces: NextPage = () => {
         </div>
         <br />
         <div className="d-flex flex-wrap justify-content-center">
-            {filteredSpaces?.map(space => <AdminCard key={space.id} image="carousel-2.png" space={space} />)}
+            {filteredSpaces?.map(space => <AdminCard key={space.id} space={space} />)}
         </div>
     </div>
 }
