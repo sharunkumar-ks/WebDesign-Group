@@ -28,7 +28,7 @@ export const catalogRouter = router({
             };
         }),
 
-    getBookingsOfUser: publicProcedure
+    getMyBookings: publicProcedure
         .query(async ({ ctx }) => {
             return {
                 spaces: await ctx.prisma.bookedTimeSlot.findMany({
@@ -36,7 +36,11 @@ export const catalogRouter = router({
                         userId: ctx.session?.user?.id + ""
                     },
                     include: {
-                        space: true,
+                        space: {
+                            include: {
+                                location: true
+                            }
+                        },
                         timeSlot: true,
                         bookedBy: true,
                     }

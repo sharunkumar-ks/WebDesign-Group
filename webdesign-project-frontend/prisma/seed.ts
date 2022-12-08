@@ -102,7 +102,7 @@ async function main() {
 
     const startDate = new Date()
 
-    startDate.setFullYear(2022, 11, 8)
+    startDate.setFullYear(2022, 11, 9)
     startDate.setHours(8, 0, 0, 0)
 
     console.log({ startDate })
