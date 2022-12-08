@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link"
@@ -26,11 +27,6 @@ const OfficeSpace: NextPage = () => {
     const handleSelectDate = (e: any) => {
         console.log(e);
         setDate(e)
-    }
-
-    const handleSelectTimeSlot = (e: any) => {
-        console.log(e);
-        setTimeSlot(e)
     }
 
     const handleSelectHours = (e: any) => {
@@ -99,7 +95,7 @@ const OfficeSpace: NextPage = () => {
                     id="dropdown-menu-align-right"
                 >
                     {filteredTimeSlots ? filteredTimeSlots.map((ts, idx) => {
-                        return <Dropdown.Item key={idx} eventKey={ts.date.toString()} onClick={e => setTimeSlot(ts)}>{formatTimeSlotAsTime(ts)}</Dropdown.Item>
+                        return <Dropdown.Item key={idx} eventKey={ts.date.toString()} onClick={() => setTimeSlot(ts)}>{formatTimeSlotAsTime(ts)}</Dropdown.Item>
                     }) : <></>}
                 </DropdownButton>&nbsp;
                 <DropdownButton
