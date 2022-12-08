@@ -5,7 +5,7 @@ import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Location } from "@prisma/client";
+import type { Location } from "@prisma/client";
 import Dropdown from 'react-bootstrap/Dropdown'
 
 
@@ -15,8 +15,7 @@ const OfficeSpace: NextPage = () => {
 
     type ComponentState = {
         showModal: boolean;
-        newLocationName: string;
-        selectedLocation: Location | null;
+        selectedLocation: Location | undefined;
         name: string;
         description: string;
     }
@@ -32,24 +31,22 @@ const OfficeSpace: NextPage = () => {
     const [show, setShow] = useState(false);
 
     const { mutate: editSpace } = trpc.catalog.editSpace.useMutation({
-        onSuccess: (params) => {
+        onSuccess: () => {
             refetchSpace()
-            // router.push(`/space/${params.id}`)
         }
     })
 
     const { mutate: deleteSpace } = trpc.catalog.deleteSpace.useMutation({
-        onSuccess: (param) => {
+        onSuccess: () => {
             router.replace("/myspaces")
         }
     })
 
     const [state, setState] = useState<ComponentState>({
         showModal: false,
-        newLocationName: "",
-        selectedLocation: null,
-        name: "",
-        description: "",
+        selectedLocation: data?.space?.location,
+        name: data?.space?.title || "",
+        description: data?.space?.description || "",
     });
 
     const handleRemove = async () => {
@@ -106,7 +103,7 @@ const OfficeSpace: NextPage = () => {
             <Modal.Body><Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" defaultValue={data?.space?.title} onChange={(e) => setState({ ...state, name: e.target.value })} />
+                    <Form.Control type="text" defaultValue={state.name} onChange={(e) => setState({ ...state, name: e.target.value })} />
                     {/* <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text> */}
@@ -114,7 +111,7 @@ const OfficeSpace: NextPage = () => {
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control type="text" defaultValue={data?.space?.description} onChange={(e) => setState({ ...state, description: e.target.value })} />
+                    <Form.Control type="text" defaultValue={state.description} onChange={(e) => setState({ ...state, description: e.target.value })} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Location</Form.Label>
@@ -148,7 +145,7 @@ const OfficeSpace: NextPage = () => {
             <Modal.Header closeButton>
                 <Modal.Title>Remove Details</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are you sure you want to delete?? </Modal.Body>
+            <Modal.Body>Are you sure you want to delete?</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleCloseRemove}>
                     Close

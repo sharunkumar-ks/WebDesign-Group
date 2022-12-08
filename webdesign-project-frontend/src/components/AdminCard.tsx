@@ -15,9 +15,8 @@ const AdminCard = (props: AdminCardProps) => <div className="card mx-2 my-2" sty
     <div className="card-body">
         <h5 className="card-title">{props.space.title}</h5>
         <p className="card-text">{props.space.description}</p>
-        <p className="card-text">{props.space.location.name}</p>
-        <Link href={"/editspace/" + props.space.id} className="btn btn-primary" >View</Link>
-        {/* <Link href={"/space/" + props.space.id} className="btn btn-primary" >Remove</Link> */}
+        <p className="card-text"><b>Location:</b> {props.space.location.name}</p>
+        <Link href={"/editspace/" + props.space.id} className="btn btn-primary" >Edit / Remove</Link>
     </div>
 </div >
 
