@@ -61,13 +61,13 @@ export const catalogRouter = router({
 
     addLocation: publicProcedure
         .input(z.object({
-            title: z.string(),
+            name: z.string(),
         }))
         .mutation(async ({ ctx, input }) => {
             return await ctx.prisma.location
                 .create({
                     data: {
-                        name: input.title,
+                        name: input.name,
                     }
                 })
         }),
@@ -87,5 +87,39 @@ export const catalogRouter = router({
                         locationId: input.locationId,
                     }
                 })
-        })
+        }),
+
+    editSpace: publicProcedure
+        .input(z.object({
+            id: z.string(),
+            title: z.string(),
+            description: z.string(),
+            locationId: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.prisma.space
+                .update({
+                    where: {
+                        id: input.id
+                    },
+                    data: {
+                        title: input.title,
+                        description: input.description,
+                        locationId: input.locationId,
+                    }
+                })
+        }),
+
+    deleteSpace: publicProcedure
+        .input(z.object({
+            id: z.string(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.prisma.space
+                .delete({
+                    where: {
+                        id: input.id
+                    }
+                })
+        }),
 });
