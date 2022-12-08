@@ -6,16 +6,21 @@ import type { Location } from "@prisma/client";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { useRouter } from "next/router";
 
 
 type ComponentState = {
     showModal: boolean;
     newLocationName: string;
+    selectedLocation: Location | null;
+    name: string;
+    description: string;
 }
 
 const AddOfficeSpace: NextPage = () => {
 
     const locations = trpc.catalog.getLocations.useQuery();
+    const router = useRouter();
     // const ctx = trpc.useContext();
 
 
@@ -27,11 +32,18 @@ const AddOfficeSpace: NextPage = () => {
         }
     })
 
-    const [selectedItem, setSelectedItem] = useState<Location>();
+    const { mutate: addSpace } = trpc.catalog.addSpace.useMutation({
+        onSuccess: (params) => {
+            router.push(`/space/${params.id}`)
+        }
+    })
 
     const [state, setState] = useState<ComponentState>({
         showModal: false,
         newLocationName: "",
+        selectedLocation: null,
+        name: "",
+        description: "",
     });
 
     const handleModelOkClick = async () => {
@@ -39,20 +51,33 @@ const AddOfficeSpace: NextPage = () => {
         mutate({ name: state.newLocationName })
     }
 
+    const handleAddSpaceClick = async () => {
+        addSpace({
+            title: state.name,
+            description: state.description,
+            locationId: state.selectedLocation?.id + ""
+        })
+    }
+
     return <div className="container">
         <br />
         <h1>Add new workspace</h1>
         <br />
-        <form className="row g-3">
+        <form className="row g-3" onSubmit={(e) => e.preventDefault()}>
             <div className="col-md-8">
                 {/* <label for="inputEmail4" class="form-label">Email</label> */}
-                <input type="text" className="form-control" id="inputtext4" placeholder="Enter Name" />
+                <input type="text" className="form-control" id="inputtext4" placeholder="Enter Name" value={state.name}
+                    onChange={(e) => setState({ ...state, name: e.target.value })}
+                />
                 {/* <p className="text mb-1">Name</p> */}
             </div>
 
             <div className="col-md-8">
                 {/* <label for="inputAddress" class="form-label">Address</label> */}
-                <input type="text" className="form-control" id="inputAddress" placeholder="Enter Description" />
+                <input type="text" className="form-control" id="inputAddress" placeholder="Enter Description"
+                    value={state.description}
+                    onChange={(e) => setState({ ...state, description: e.target.value })}
+                />
                 {/* <p className="text mb-1">Description</p> */}
             </div>
             {/* <DropdownButton
@@ -66,10 +91,13 @@ const AddOfficeSpace: NextPage = () => {
                 <div>
                     <div><span>Select Location</span></div>
                     <Dropdown>
-                        <Dropdown.Toggle variant="success">{selectedItem ? selectedItem.name : "Select Location"}</Dropdown.Toggle>
+                        <Dropdown.Toggle variant="success">{state.selectedLocation ? state.selectedLocation.name : "Select Location"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {locations.data?.locations?.map((item, idx) => (
-                                <Dropdown.Item key={idx} onClick={() => setSelectedItem(item)}>
+                                <Dropdown.Item key={idx} onClick={() => {
+                                    setState({ ...state, selectedLocation: item });
+                                }
+                                }>
                                     {item.name}
                                 </Dropdown.Item>
                             ))}
@@ -98,7 +126,7 @@ const AddOfficeSpace: NextPage = () => {
                 </div>
             </div> */}
             <div className="col-12">
-                <button type="submit" className="btn btn-primary">Add</button>
+                <button type="submit" className="btn btn-primary" onClick={handleAddSpaceClick}>Add</button>
             </div>
         </form>
 
