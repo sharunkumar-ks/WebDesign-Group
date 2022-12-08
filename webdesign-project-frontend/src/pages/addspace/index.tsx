@@ -109,7 +109,7 @@ const AddOfficeSpace: NextPage = () => {
 
         <Modal show={state.showModal} onHide={() => { setState({ ...state, showModal: false }) }}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Add a new Location</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
