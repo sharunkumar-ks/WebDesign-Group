@@ -38,6 +38,12 @@ const OfficeSpace: NextPage = () => {
         }
     })
 
+    const { mutate: deleteSpace } = trpc.catalog.deleteSpace.useMutation({
+        onSuccess: (param) => {
+            router.replace("/myspaces")
+        }
+    })
+
     const [state, setState] = useState<ComponentState>({
         showModal: false,
         newLocationName: "",
@@ -45,6 +51,12 @@ const OfficeSpace: NextPage = () => {
         name: "",
         description: "",
     });
+
+    const handleRemove = async () => {
+        deleteSpace({
+            id: id_string,
+        })
+    }
 
     const handleSaveChanges = async () => {
         editSpace({
@@ -72,6 +84,7 @@ const OfficeSpace: NextPage = () => {
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
+                <p className="card-text">{data?.space?.location.name}</p>
 
             </div>
 
@@ -80,7 +93,7 @@ const OfficeSpace: NextPage = () => {
                     Edit
                 </Button>
                 &nbsp;
-                <Button variant="primary" onClick={handleShowRemove}>
+                <Button variant="danger" onClick={handleShowRemove}>
                     Remove
                 </Button>
             </div>
@@ -88,7 +101,7 @@ const OfficeSpace: NextPage = () => {
         </div>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Edit Details</Modal.Title>
             </Modal.Header>
             <Modal.Body><Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -105,7 +118,6 @@ const OfficeSpace: NextPage = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Location</Form.Label>
-                    {/* <Form.Control type="text" defaultValue={data?.space?.location} onChange={(e) => setState({ ...state, description: e.target.value })} /> */}
                     <Dropdown>
                         <Dropdown.Toggle variant="success">{state.selectedLocation ? state.selectedLocation.name : "Select Location"}</Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -134,14 +146,14 @@ const OfficeSpace: NextPage = () => {
 
         <Modal show={showRemove} onHide={handleCloseRemove}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Remove Details</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Remove Details</Modal.Body>
+            <Modal.Body>Are you sure you want to delete?? </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleCloseRemove}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleCloseRemove}>
+                <Button variant="danger" onClick={handleRemove}>
                     Ok
                 </Button>
             </Modal.Footer>
