@@ -1,8 +1,7 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Location } from "@prisma/client";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -70,12 +69,12 @@ const AddOfficeSpace: NextPage = () => {
                         <Dropdown.Toggle variant="success">{selectedItem ? selectedItem.name : "Select Location"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {locations.data?.locations?.map((item, idx) => (
-                                <Dropdown.Item key={idx} onClick={(e) => setSelectedItem(item)}>
+                                <Dropdown.Item key={idx} onClick={() => setSelectedItem(item)}>
                                     {item.name}
                                 </Dropdown.Item>
                             ))}
                             <Dropdown.Divider />
-                            <Dropdown.Item onClick={(e) => setState({ ...state, showModal: true })}>Add New Location</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setState({ ...state, showModal: true })}>Add New Location</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown><br />
                 </div>
