@@ -55,11 +55,7 @@ const Catalog: NextPage = () => {
         </div>
         <br />
         <div className="d-flex flex-wrap justify-content-center">
-
-
-
-
-            {filteredSpaces?.map(space => <ProductCatalogCard key={space.id} image="carousel-2.png" space={space} />)}
+            {filteredSpaces?.map((space, idx) => <ProductCatalogCard key={space.id} image={`image${idx % 8}.png`} space={space} />)}
         </div>
     </div>
 }

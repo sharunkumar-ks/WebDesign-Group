@@ -53,6 +53,12 @@ const AddOfficeSpace: NextPage = () => {
     }
 
     const handleAddSpaceClick = async () => {
+
+        if (state.name == "" || state.description == "" || !state.selectedLocation) {
+            return alert("Please fill all fields")
+        }
+
+
         addSpace({
             title: state.name,
             description: state.description,

@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Location, Space } from "@prisma/client";
 import Link from "next/link";
+import cuidToImageNum from "../utils/cuidToImageNum";
 
 type AdminCardProps = {
-    image: string;
     space: (Space & {
         location: Location;
     })
@@ -11,7 +11,7 @@ type AdminCardProps = {
 
 
 const AdminCard = (props: AdminCardProps) => <div className="card mx-2 my-2" style={{ maxWidth: "300px" }}>
-    <img src={props.image} className="card-img-top" alt="..." />
+    <img src={cuidToImageNum(props.space.id + "")} className="card-img-top" alt="..." />
     <div className="card-body">
         <h5 className="card-title">{props.space.title}</h5>
         <p className="card-text">{props.space.description}</p>

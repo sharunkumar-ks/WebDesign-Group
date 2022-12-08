@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import dateFormat from "dateformat";
 import { Button } from "react-bootstrap";
+import cuidToImageNum from "../utils/cuidToImageNum";
 import type { RouterOutputs } from "../utils/trpc";
 import { trpc } from "../utils/trpc";
 import type { Unpacked } from "../utils/typehelpers";
@@ -8,7 +9,6 @@ import type { Unpacked } from "../utils/typehelpers";
 type HistoryOutput = RouterOutputs["catalog"]["getMyBookings"]["spaces"]
 
 type BookingHistoryProps = {
-    image: string;
     history: Unpacked<HistoryOutput>
 }
 const mystyle = {
@@ -40,7 +40,7 @@ const BookingHistoryCard = (props: BookingHistoryProps) => {
 
     return <div className="container card flex-row flex-wrap my-3 py-4">
         <div className="card-header border-0">
-            <img src={props.image} style={mystyle} alt="" />
+            <img src={cuidToImageNum(props.history.spaceId + "")} style={mystyle} alt="" />
         </div>
         <div className="card-block px-2">
             <h4 className="card-title">{props.history.space.title}</h4>

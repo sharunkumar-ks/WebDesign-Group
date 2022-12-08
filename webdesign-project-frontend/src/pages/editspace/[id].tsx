@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import type { Location } from "@prisma/client";
 import Dropdown from 'react-bootstrap/Dropdown'
+import cuidToImageNum from "../../utils/cuidToImageNum";
 
 
 const OfficeSpace: NextPage = () => {
@@ -77,7 +78,7 @@ const OfficeSpace: NextPage = () => {
 
     return <>
         <div className="card container my-5">
-            <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
+            <img src={cuidToImageNum(id_string)} className="card-img-top img-thumbnail" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>

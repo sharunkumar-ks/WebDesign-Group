@@ -10,6 +10,7 @@ import type { TimeSlot } from "@prisma/client";
 import dateFormat, { masks } from "dateformat";
 import { Button } from "react-bootstrap";
 import { useSession } from "next-auth/react";
+import cuidToImageNum from "../../utils/cuidToImageNum";
 // import Button from "react-bootstrap/esm/Button";
 
 
@@ -130,7 +131,7 @@ const OfficeSpace: NextPage = () => {
 
     return <>
         <div className="card container my-5">
-            <img src="../carousel-2.png" className="card-img-top img-thumbnail" alt="..." />
+            <img src={cuidToImageNum(id_string)} className="card-img-top img-thumbnail" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{data?.space?.title}</h5>
                 <p className="card-text">{data?.space?.description}</p>
