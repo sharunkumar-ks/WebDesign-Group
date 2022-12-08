@@ -4,9 +4,7 @@ import Link from "next/link"
 import { trpc } from "../../utils/trpc";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
-import { useEffect, useState } from "react";
-import type { TimeSlot } from "@prisma/client";
-import dateFormat, { masks } from "dateformat";
+import { useState } from "react";
 
 const OfficeSpace: NextPage = () => {
 
@@ -19,49 +17,14 @@ const OfficeSpace: NextPage = () => {
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
 
     const [date, setDate] = useState(null)
-    const [timeSlot, setTimeSlot] = useState<TimeSlot>();
-    const [hours, setHours] = useState(0)
-    const [filteredTimeSlots, setFilteredTimeSlots] = useState([] as TimeSlot[])
-
-    const handleSelectDate = (e: any) => {
-        console.log(e);
-        setDate(e)
-    }
-
+    const [timeSlot, setTimeSlot] = useState(null);
     const handleSelectTimeSlot = (e: any) => {
         console.log(e);
         setTimeSlot(e)
     }
-
-    const handleSelectHours = (e: any) => {
+    const handleSelectDate = (e: any) => {
         console.log(e);
-        setHours(e)
-    }
-
-    const timeSlots = trpc.catalog.getTimeSlots.useQuery()
-
-    console.log({ timeSlots: timeSlots.data })
-
-    const dateSet = new Set<string>()
-
-    timeSlots.data?.timeSlots.forEach(time => {
-        dateSet.add(time?.date?.toDateString())
-    })
-
-    console.log({ dateSet })
-
-    useEffect(() => {
-        if (!date) {
-            return setFilteredTimeSlots([])
-        }
-
-        setFilteredTimeSlots(timeSlots.data?.timeSlots.filter(time => time.date.toDateString() == date) as TimeSlot[])
-    }, [date, timeSlots.data?.timeSlots])
-
-    function formatTimeSlotAsTime(timeSlot: TimeSlot): string {
-        const date = timeSlot.date
-
-        return dateFormat(date, "hh:MM TT")
+        setDate(e)
     }
 
     function handleBookButton(e: React.FormEvent<HTMLInputElement>) {
@@ -89,23 +52,16 @@ const OfficeSpace: NextPage = () => {
                     id="dropdown-menu-align-right"
                     onSelect={handleSelectDate}
                 >
-                    {[...dateSet].map((date, idx) => {
-                        return <Dropdown.Item key={idx} eventKey={date}>{date}</Dropdown.Item>
-                    })}
-
+                    <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
+                    <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
+                    <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
                 </DropdownButton>&nbsp;
                 <DropdownButton
-                    title={timeSlot ? formatTimeSlotAsTime(timeSlot) : "Select Time Slot"}
+                    title={timeSlot ? timeSlot : "Select Time Slot"}
                     id="dropdown-menu-align-right"
-                >
-                    {filteredTimeSlots ? filteredTimeSlots.map((ts, idx) => {
-                        return <Dropdown.Item key={idx} eventKey={ts.date.toString()} onClick={e => setTimeSlot(ts)}>{formatTimeSlotAsTime(ts)}</Dropdown.Item>
-                    }) : <></>}
-                </DropdownButton>&nbsp;
-                <DropdownButton
-                    title={hours ? hours : "Select number of hours"}
-                    id="dropdown-menu-align-right"
-                    onSelect={handleSelectHours}
+                    onSelect={handleSelectTimeSlot}
                 >
                     {[1, 2, 3, 4, 5].map(item => <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>)}
 
