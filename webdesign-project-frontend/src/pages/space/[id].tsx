@@ -8,6 +8,16 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useEffect, useState } from "react";
 import type { TimeSlot } from "@prisma/client";
 import dateFormat, { masks } from "dateformat";
+import { Button } from "react-bootstrap";
+// import Button from "react-bootstrap/esm/Button";
+
+
+type ComponentState = {
+    selectedDate: string | null;
+    selectedTimeSlot: TimeSlot | null;
+    selectedHours: number;
+    bookButtonEnabled: boolean;
+}
 
 const OfficeSpace: NextPage = () => {
 
@@ -19,24 +29,34 @@ const OfficeSpace: NextPage = () => {
 
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
 
-    const [date, setDate] = useState(null)
-    const [timeSlot, setTimeSlot] = useState<TimeSlot>();
-    const [hours, setHours] = useState(0)
-    const [filteredTimeSlots, setFilteredTimeSlots] = useState([] as TimeSlot[])
+    const { mutate: bookSpace } = trpc.catalog.bookTimeSlots.useMutation({
+        onSuccess: () => {
+            alert("Space booked")
+            router.push("/history")
+        },
+        onError: (err) => {
+            alert("Unable to book the space. Please select a different time slot / space")
+        }
+    })
 
-    const handleSelectDate = (e: any) => {
-        console.log(e);
-        setDate(e)
+    const [state, setState] = useState<ComponentState>({
+        selectedDate: null,
+        selectedTimeSlot: null,
+        selectedHours: 0,
+        bookButtonEnabled: false
+    })
+
+    const [filteredTimeSlots, setFilteredTimeSlots] = useState<TimeSlot[]>([] as TimeSlot[])
+
+    const handleSelectDate = (e: string) => {
+        setState({ ...state, selectedDate: e })
     }
 
-    const handleSelectHours = (e: any) => {
-        console.log(e);
-        setHours(e)
+    const handleSelectHours = (hours: number) => {
+        setState({ ...state, selectedHours: hours })
     }
 
     const timeSlots = trpc.catalog.getTimeSlots.useQuery()
-
-    console.log({ timeSlots: timeSlots.data })
 
     const dateSet = new Set<string>()
 
@@ -44,15 +64,19 @@ const OfficeSpace: NextPage = () => {
         dateSet.add(time?.date?.toDateString())
     })
 
-    console.log({ dateSet })
-
     useEffect(() => {
-        if (!date) {
+        if (!state.selectedDate) {
+            console.log("No date selected")
             return setFilteredTimeSlots([])
         }
 
-        setFilteredTimeSlots(timeSlots.data?.timeSlots.filter(time => time.date.toDateString() == date) as TimeSlot[])
-    }, [date, timeSlots.data?.timeSlots])
+        console.log("Date selected " + state.selectedDate)
+
+        console.log(timeSlots.data?.timeSlots.length)
+
+        setFilteredTimeSlots(timeSlots.data?.timeSlots.filter(time => time.date.toDateString() === state.selectedDate) as TimeSlot[])
+
+    }, [state.selectedDate])
 
     function formatTimeSlotAsTime(timeSlot: TimeSlot): string {
         const date = timeSlot.date
@@ -60,14 +84,42 @@ const OfficeSpace: NextPage = () => {
         return dateFormat(date, "hh:MM TT")
     }
 
-    function handleBookButton(e: React.FormEvent<HTMLInputElement>) {
-        console.log({ date, timeSlot, hours })
+    useEffect(() => {
+        console.log({ selectedTimeSlot: state.selectedTimeSlot, selectedHours: state.selectedHours, selectedDate: state.selectedDate })
 
-        if (!date || !timeSlot || !hours) {
-            alert("Select the details")
-            return e.preventDefault();
+        if (!state.selectedTimeSlot || !state.selectedHours || !state.selectedDate) {
+            return setState({ ...state, bookButtonEnabled: false })
         }
 
+        setState({ ...state, bookButtonEnabled: true })
+
+    }, [state.selectedTimeSlot, state.selectedHours, state.selectedDate])
+
+    function handleBookButton() {
+        if (!state.selectedDate || !state.selectedTimeSlot || !state.selectedHours) {
+            alert("Select the details")
+            return
+        }
+
+        const index = filteredTimeSlots.indexOf(state.selectedTimeSlot)
+
+        const finalTimeSlots = filteredTimeSlots.slice(index, index + state.selectedHours)
+
+        console.log({ finalTimeSlots })
+
+        if (finalTimeSlots.length !== state.selectedHours) {
+            const result = confirm("Only " + finalTimeSlots.length + " hours are available from that time slot. Do you want to book them?")
+
+            if (!result) {
+                return
+            }
+        }
+
+        // booking logic
+        bookSpace({
+            spaceId: id_string,
+            timeSlotIds: finalTimeSlots.map(ts => ts.id),
+        })
     }
 
     return <>
@@ -82,32 +134,35 @@ const OfficeSpace: NextPage = () => {
 
             <div className="d-flex">
                 <DropdownButton
-                    title={date ? date : "Select Date"}
+                    title={state.selectedDate ? state.selectedDate : "Select Date"}
                     id="dropdown-menu-align-right"
-                    onSelect={handleSelectDate}
                 >
                     {[...dateSet].map((date, idx) => {
-                        return <Dropdown.Item key={idx} eventKey={date}>{date}</Dropdown.Item>
+                        return <Dropdown.Item key={idx} eventKey={date} onClick={() => handleSelectDate(date)}>{date}</Dropdown.Item>
                     })}
 
                 </DropdownButton>&nbsp;
                 <DropdownButton
-                    title={timeSlot ? formatTimeSlotAsTime(timeSlot) : "Select Time Slot"}
+                    title={state.selectedTimeSlot ? formatTimeSlotAsTime(state.selectedTimeSlot) : "Select Time Slot"}
                     id="dropdown-menu-align-right"
                 >
                     {filteredTimeSlots ? filteredTimeSlots.map((ts, idx) => {
-                        return <Dropdown.Item key={idx} eventKey={ts.date.toString()} onClick={() => setTimeSlot(ts)}>{formatTimeSlotAsTime(ts)}</Dropdown.Item>
+                        return <Dropdown.Item key={idx} eventKey={ts.date.toString()}
+                            onClick={() => setState({ ...state, selectedTimeSlot: ts })}
+                        >{formatTimeSlotAsTime(ts)}</Dropdown.Item>
                     }) : <></>}
                 </DropdownButton>&nbsp;
                 <DropdownButton
-                    title={hours ? hours : "Select number of hours"}
+                    title={state.selectedHours ? state.selectedHours : "Select number of hours"}
                     id="dropdown-menu-align-right"
-                    onSelect={handleSelectHours}
                 >
-                    {[1, 2, 3, 4, 5].map(item => <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>)}
+                    {[1, 2, 3, 4, 5].map((item, idx) => <Dropdown.Item key={item} eventKey={item}
+                        onClick={() => handleSelectHours(item)}
+                    >{item}</Dropdown.Item>)}
 
                 </DropdownButton>&nbsp;
-                <Link className="btn btn-primary" href={`/payment/${id}`} onClick={handleBookButton}>Book</Link>
+                <Button variant="primary" disabled={!state.bookButtonEnabled} onClick={() => handleBookButton()}>Book</Button>
+                {/* <Link className={`btn btn-primary ${state.bookButtonEnabled ? "" : "disabled"}`} href={`/payment/${id}`} onClick={handleBookButton}>Book</Link> */}
             </div>
             <br />
         </div>
