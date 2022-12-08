@@ -1,9 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import Link from "next/link"
 import { trpc } from "../../utils/trpc";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -18,35 +15,6 @@ const OfficeSpace: NextPage = () => {
     const id_string: string = id?.toString() || ""
 
     const { data } = trpc.catalog.getSpaceById.useQuery({ id: id_string })
-    console.log("hiiiiii/", data)
-    // space
-    // : 
-    // description
-    // : 
-    // "Office Room"
-    // id
-    // : 
-    // "clba4s4z70008s8r62yia359l"
-    // location
-    // : 
-    // {id: 'clba4s4z40004s8r6nzznpge0', name: 'Snell'}
-    // locationId
-    // : 
-    // "clba4s4z40004s8r6nzznpge0"
-    // title
-    // : 
-    // "101"
-
-    const [date, setDate] = useState(null)
-    const [timeSlot, setTimeSlot] = useState(null);
-    const handleSelectTimeSlot = (e: any) => {
-        console.log(e);
-        setTimeSlot(e)
-    }
-    const handleSelectDate = (e: any) => {
-        console.log(e);
-        setDate(e)
-    }
 
     const [show, setShow] = useState(false);
 

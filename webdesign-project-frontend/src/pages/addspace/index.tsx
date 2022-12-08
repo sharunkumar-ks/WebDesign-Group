@@ -3,13 +3,42 @@ import { trpc } from "../../utils/trpc";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import { useEffect, useState } from "react";
-import { Location } from "@prisma/client";
+import type { Location } from "@prisma/client";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+
+
+type ComponentState = {
+    showModal: boolean;
+    newLocationName: string;
+}
 
 const AddOfficeSpace: NextPage = () => {
 
-    const locations = trpc.catalog.getLocations.useQuery().data?.locations;
+    const locations = trpc.catalog.getLocations.useQuery();
+    // const ctx = trpc.useContext();
+
+
+    const { mutate } = trpc.catalog.addLocation.useMutation({
+        onSuccess: () => {
+            locations.refetch();
+
+            setState({ ...state, showModal: false, newLocationName: "" });
+        }
+    })
 
     const [selectedItem, setSelectedItem] = useState<Location>();
+
+    const [state, setState] = useState<ComponentState>({
+        showModal: false,
+        newLocationName: "",
+    });
+
+    const handleModelOkClick = async () => {
+        setState({ ...state, showModal: false });
+        mutate({ name: state.newLocationName })
+    }
 
     return <div className="container">
         <br />
@@ -40,11 +69,13 @@ const AddOfficeSpace: NextPage = () => {
                     <Dropdown>
                         <Dropdown.Toggle variant="success">{selectedItem ? selectedItem.name : "Select Location"}</Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {locations?.map((item, idx) => (
+                            {locations.data?.locations?.map((item, idx) => (
                                 <Dropdown.Item key={idx} onClick={(e) => setSelectedItem(item)}>
                                     {item.name}
                                 </Dropdown.Item>
                             ))}
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={(e) => setState({ ...state, showModal: true })}>Add New Location</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown><br />
                 </div>
@@ -71,6 +102,31 @@ const AddOfficeSpace: NextPage = () => {
                 <button type="submit" className="btn btn-primary">Add</button>
             </div>
         </form>
+
+        <Modal show={state.showModal} onHide={() => { setState({ ...state, showModal: false }) }}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Location Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Location Name"
+                            value={state.newLocationName}
+                            onChange={(e) => setState({ ...state, newLocationName: e.target.value })}
+                        />
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => { setState({ ...state, showModal: false }) }}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleModelOkClick}>
+                    Ok
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </div>
 }
 
