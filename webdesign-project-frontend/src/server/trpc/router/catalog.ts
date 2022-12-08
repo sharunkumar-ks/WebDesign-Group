@@ -55,7 +55,7 @@ export const catalogRouter = router({
     getLocations: publicProcedure
         .query(async ({ ctx }) => {
             return {
-                timeSlots: await ctx.prisma.location.findMany({})
+                locations: await ctx.prisma.location.findMany({})
             }
         }),
 

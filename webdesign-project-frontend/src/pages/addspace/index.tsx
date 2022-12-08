@@ -1,36 +1,55 @@
 import type { NextPage } from "next";
+import { trpc } from "../../utils/trpc";
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
+import { useEffect, useState } from "react";
+import { Location } from "@prisma/client";
 
 const AddOfficeSpace: NextPage = () => {
+
+    const locations = trpc.catalog.getLocations.useQuery().data?.locations;
+
+    const [selectedItem, setSelectedItem] = useState<Location>();
 
     return <div className="container">
         <br />
         <h1>Add new workspace</h1>
+        <br />
         <form className="row g-3">
-            <div className="col-md-6">
+            <div className="col-md-8">
                 {/* <label for="inputEmail4" class="form-label">Email</label> */}
-                <input type="text" className="form-control" id="inputtext4" />
-                <p className="text mb-1">Name</p>
+                <input type="text" className="form-control" id="inputtext4" placeholder="Enter Name" />
+                {/* <p className="text mb-1">Name</p> */}
             </div>
-            <div className="col-md-6">
-                {/* <label for="inputPassword4" class="form-label">Password</label> */}
-                <input type="email" className="form-control" id="inputEmail4" />
-                <p className="text mb-1">Email</p>
-            </div>
-            <div className="col-12">
+
+            <div className="col-md-8">
                 {/* <label for="inputAddress" class="form-label">Address</label> */}
-                <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" />
-                <p className="text mb-1">Address</p>
+                <input type="text" className="form-control" id="inputAddress" placeholder="Enter Description" />
+                {/* <p className="text mb-1">Description</p> */}
             </div>
-            <div className="col-12">
-                {/* <label for="inputAddress2" class="form-label">Address 2</label> */}
-                <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
-                <p className="text mb-1">Address 2</p>
+            {/* <DropdownButton
+                options={categories}
+                onChange={handleChange}
+                name="category"
+                id="search-select"
+            ></DropdownButton> */}
+
+            <div className="col-md-8">
+                <div>
+                    <div><span>Select Location</span></div>
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success">{selectedItem ? selectedItem.name : "Select Location"}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {locations?.map((item, idx) => (
+                                <Dropdown.Item key={idx} onClick={(e) => setSelectedItem(item)}>
+                                    {item.name}
+                                </Dropdown.Item>
+                            ))}
+                        </Dropdown.Menu>
+                    </Dropdown><br />
+                </div>
             </div>
-            <div className="col-md-6">
-                {/* <label for="inputCity" class="form-label">City</label> */}
-                <input type="text" className="form-control" id="inputCity" />
-                <p className="text mb-1">City</p>
-            </div>
+
             {/* <div className="col-md-4">
                 
                 <select id="inputState" className="form-select">
@@ -39,11 +58,6 @@ const AddOfficeSpace: NextPage = () => {
                 </select>
                 <p className="text mb-1">Choose...</p>
             </div> */}
-            <div className="col-md-2">
-                {/* <label for="inputZip" clasclassNames="form-label">Zip</label> */}
-                <input type="text" className="form-control" id="inputZip" />
-                <p className="text mb-1">Zip</p>
-            </div>
             {/* <div className="col-12">
                 <div className="form-check">
                     <input className="form-check-input" type="checkbox" id="gridCheck" />
