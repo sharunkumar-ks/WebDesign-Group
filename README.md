@@ -1,4 +1,6 @@
-# WebDesign-Group
+# RoomTree
+
+A Co-Working Spaces Booking App
 
 ## Run the project
 
